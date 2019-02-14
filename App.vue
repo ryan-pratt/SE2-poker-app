@@ -1,17 +1,23 @@
 <template>
-  <view class="container">
-    <text class="text-color-primary">My Vue Native App</text>
+    <view class="container">
+        <text class="text-color-primary">My Vue Native App</text>
     </view>
 </template>
+
+<script>
+export default {
+
+}
+</script>
  
 <style>
 .container {
-  background-color: white;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
 }
 .text-color-primary {
-  color: blue;
+    color: blue;
 }
 </style>
