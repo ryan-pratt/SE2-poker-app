@@ -1,8 +1,8 @@
 module.exports = {
-    is21: function() {
+    is21: function(player) {
         //TODO
     },
-    hit: function() {
+    hit: function(player, deckStack) {
         //TODO
     }
 }

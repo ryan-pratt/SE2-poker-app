@@ -1,5 +1,5 @@
-module.exports = {
-    DeckArray: [
+module.exports = function() {
+    let newDeck = [
         [1, '1s'],
         [2, '2s'],
         [3, '3s'],
@@ -52,17 +52,15 @@ module.exports = {
         [50, '11h'],
         [51, '12h'],
         [52, '13h']
-    ],
-
-    init: function() {
-        let newDeck = this.DeckArray;
-        for (let i = 0; i < 3000; i++) {
-            var num1 = Math.ceil(52*Math.random())
-            var num2 = Math.ceil(52*Math.random())
-            var temp = newDeck[num1]
-            newDeck[num1] = newDeck[num2]
-            newDeck[num2] = temp
-        }
-        return newDeck;
+    ];
+    
+    for (let i = 0; i < 3000; i++) {
+        var num1 = Math.ceil(52*Math.random())
+        var num2 = Math.ceil(52*Math.random())
+        var temp = newDeck[num1]
+        newDeck[num1] = newDeck[num2]
+        newDeck[num2] = temp
     }
+
+    return newDeck;
 }
