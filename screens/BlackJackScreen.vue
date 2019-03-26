@@ -1,5 +1,5 @@
 <template>
-    <view class="container">
+    <view class='container'>
         <text>This is the blackjack gameplay screen.</text>
     </view>
 </template>
@@ -29,7 +29,7 @@ export default {
         this.player = Player();
     },
     methods: {
-
+        
     }
 }
 </script>

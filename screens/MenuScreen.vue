@@ -1,6 +1,10 @@
 <template>
-    <view class="container">
+    <view class='container'>
         <text>This is the menu screen.</text>
+
+        <touchable-opacity :on-press="startBlackJack">
+            <text>Tap here to go to the blackjack game</text>
+        </touchable-opacity>
     </view>
 </template>
     
@@ -17,7 +21,9 @@ export default {
         };
     },
     methods: {
-
+        startBlackJack: function() {
+            this.navigation.navigate('BlackJack');
+        }
     }
 }
 </script>
