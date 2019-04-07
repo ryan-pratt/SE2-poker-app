@@ -4,7 +4,7 @@
             'card-up': faceUp,
             'card-down': !faceUp
         }">
-        <text class="card-text">{{value}}</text>
+        <text v-if="faceUp" class="card-text">{{value}}</text>
     </view>
 </template>
     
@@ -15,7 +15,8 @@ export default {
             type: String
         },
         faceUp: {
-            type: Boolean
+            type: Boolean,
+            default: true
         }
     }
 }

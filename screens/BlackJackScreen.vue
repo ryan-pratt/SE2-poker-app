@@ -2,18 +2,15 @@
     <view class='container'>
         <view class="table">
             <view class="table-section dealer">
-                <!-- <card v-for="(card, index) in dealer.Hand"
+                <card v-for="(card, index) in dealer.Hand"
                     :key="card[0]"
                     :value="card[1]"
-                    :face-up="index == 0 || dealerTurnStarted" /> -->
+                    :face-up="index == 0 || dealerTurnStarted" />
             </view>
             <view class="table-section player">
-                <view class="card card-up">
-                    <text class="card-text">7 spades</text>
-                </view>
-                <view class="card card-up">
-                    <text class="card-text">6 spades</text>
-                </view>
+                <card v-for="card in player.Hand"
+                    :key="card[0]"
+                    :value="card[1]" />
             </view>
             <view class="table-section controls">
 
@@ -28,7 +25,7 @@ import Card from '../components/Card';
 const BlackJack = require('../logic/BlackJack');
 const Deck = require('../logic/Deck');
 const Dealer = require('../logic/Dealer');
-// const Player = require('../logic/Player');
+const Player = require('../logic/Player');
 
 export default {
     props: {
@@ -48,10 +45,10 @@ export default {
     created: function() {
         this.deck = Deck();
         this.dealer = Dealer();
-        // this.player = Player(2000);
+        this.player = Player(2000);
 
-        // this.dealer.startHand(this.deck);
-        // this.player.startHand(this.deck);
+        this.dealer.startHand(this.deck);
+        this.player.startHand(this.deck);
     },
     methods: {
         
