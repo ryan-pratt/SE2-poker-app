@@ -6,7 +6,7 @@ module.exports = {
             var cardN = card.slice(0,card.length-1);
             if(cardN.equals('1')){//if card is Ace
                 sum[0]+= 1;
-                sum[1]+= 11;//optional val of Ace
+                sum[1]+= sum[0]+11;//optional val of Ace
                 
             }
             else if(cardN.length==1){//if card is 2-9 inclusive
@@ -54,6 +54,19 @@ module.exports = {
             return true;
         }
         return false;
+    },
+    isPbust: function(player){
+        var sum = calPCardVals(player);
+        if(sum[0]>21){
+            return true;
+        }
+        return false;
+    },
+    Pbet: function(player,InitBet){
+        //TODO
+    },
+    PDoubleDown: function(player,runBet){
+        //TODO
     },
     Phit: function(player, deckStack) {//player hit
         player.PStack.push(deckStack.pop())
