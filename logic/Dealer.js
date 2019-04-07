@@ -12,7 +12,7 @@ module.exports = function(deckStack) {
             for(let i = 0; i < this.Hand.length; i++){//for the length of the hand
                 var card = this.Hand[i];
                 var cardN = card.slice(0,card.length-1);
-                if(cardN == '1'){//if card is Ace
+                if(cardN == '1'){//if card is Ace 
                     sum[1]+= sum[0] + 11;//optional val of Ace
                     sum[0]+= 1;
                 }
@@ -20,9 +20,12 @@ module.exports = function(deckStack) {
                     sum[0]+= parseInt(cardN);
                     if(sum[1]!=0){//if Ace is present
                         sum[1]+= parseInt(cardN);
+                        if(CardN == '1'){   // Second Ace Condition
+                            sum[1]+=1;
+                        }
                     }
                 }
-                else{//if card is face, via elim.
+                else{//if card is face, via elim
                     sum[0]+= 10;
                     if(sum[1]!=0){//if Ace is present
                         sum[1]+= 10;
