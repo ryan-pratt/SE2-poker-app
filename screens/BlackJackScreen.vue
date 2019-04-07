@@ -46,9 +46,10 @@ export default {
     created: function() {
         this.deck = Deck();
         this.dealer = Dealer();
-        this.player = Player(2000);
+        // this.player = Player(2000);
 
-        this.player.startHand(this.deck);
+        // this.dealer.startHand(this.deck);
+        // this.player.startHand(this.deck);
     },
     methods: {
         
