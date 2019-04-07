@@ -1,9 +1,14 @@
 module.exports = function(deckStack) {
-    let newDealer = {
-        DStack: [],
-    };
+    return {
+        Hand: [],
 
-    newDealer.DStack.push(deckStack.pop());
-    newDealer.DStack.push(deckStack.pop());
-    return newDealer;
+        hit: function(deckStack){
+            this.Hand.push(deckStack.pop());
+        },
+        startHand: function(deckStack){
+            this.Hand = [];
+            this.hit(deckStack);
+            this.hit(deckStack);
+        },
+    };
 }

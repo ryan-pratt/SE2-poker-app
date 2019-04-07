@@ -1,10 +1,15 @@
-module.exports = function(playerMoney, deckStack) {
-    let newPlayer = {
-        PStack: [],
+module.exports = function(playerMoney){
+    return {
+        Hand: [],
         PMoney: playerMoney,
-    };
 
-    newPlayer.PStack.push(deckStack.pop());
-    newPlayer.PStack.push(deckStack.pop());
-    return newPlayer;
+        hit: function(deckStack){
+            this.Hand.push(deckStack.pop());
+        },
+        startHand: function(deckStack){
+            this.Hand = [];
+            this.hit(deckStack);
+            this.hit(deckStack);
+        },
+    };
 }
