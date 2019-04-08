@@ -1,7 +1,7 @@
 module.exports = function(playerMoney){
     return {
         Hand: [],
-        PMoney: playerMoney,
+        Money: playerMoney,
 
         bet: function(initBet) {
             //TODO

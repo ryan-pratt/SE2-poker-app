@@ -1,5 +1,5 @@
 <template>
-    <view class='container'>
+    <keyboard-avoiding-view class='container' behavior="position">
         <view class="table">
             <view class="table-section dealer">
                 <card v-for="(card, index) in dealer.Hand"
@@ -13,13 +13,18 @@
                     :value="card[1]" />
             </view>
             <view class="table-section controls">
-
+                <text-input class="input" 
+                    keyboard-type="numeric"
+                    :value="playerBet"
+                    :on-end-editing="placeBet()" />
             </view>
         </view>
-    </view>
+    </keyboard-avoiding-view>
 </template>
     
 <script>
+import { KeyboardAvoidingView } from 'react-native';
+
 import Card from '../components/Card';
 
 const BlackJack = require('../logic/BlackJack');
@@ -39,6 +44,7 @@ export default {
             dealer: null,
             player: null,
 
+            playerBet: 0,
             dealerTurnStarted: false
         };
     },
@@ -46,15 +52,25 @@ export default {
         this.deck = Deck();
         this.dealer = Dealer();
         this.player = Player(2000);
-
-        this.dealer.startHand(this.deck);
-        this.player.startHand(this.deck);
     },
     methods: {
-        
+        placeBet: function() {
+            if(this.playerBet > this.player.Money) {
+                alert("You cannot bet more than you have.");
+                this.playerBet = 0;
+            }
+            else {
+                this.start();
+            }
+        },
+        start: function() {
+            // this.dealer.startHand(this.deck);
+            // this.player.startHand(this.deck);
+        }
     },
     components: {
-        Card
+        Card,
+        KeyboardAvoidingView
     }
 }
 </script>
@@ -75,22 +91,26 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin: 20;
     padding: 20;
+    width: 100%;
 }
 
-.card {
-    width: 80;
-    height: 120;
-    margin: 10;
-    padding: 20;
+.dealer {
+    height: 40%;
 }
 
-.card-up {
+.player {
+    height: 40%;
+}
+
+.controls {
+    height: 20%;
+}
+
+.input {
     background-color: white;
-}
-
-.card-down {
-    background-color: #7777ff
+    padding: 10;
+    height: 40;
+    width: 60%;
 }
 </style>
