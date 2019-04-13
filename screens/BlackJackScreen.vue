@@ -13,16 +13,22 @@
                     :value="card.val" />
             </view>
             <view class="table-section controls">
-                <text-input class="input" 
-                    keyboard-type="numeric"
-                    :on-submit-editing="placeBet" />
+                <text>Current funds: {{player.Money}}</text>
+                <view class="row">
+                    <text-input class="input" 
+                        keyboard-type="numeric"
+                        :on-submit-editing="placeBet" />
+                    <touchable-opacity class="button" :on-press="bet">
+                        <text>Bet</text>
+                    </touchable-opacity>
+                </view>
             </view>
         </view>
     </keyboard-avoiding-view>
 </template>
     
 <script>
-import { KeyboardAvoidingView } from 'react-native';
+import { Keyboard, KeyboardAvoidingView } from 'react-native';
 
 import Card from '../components/Card';
 
@@ -54,6 +60,11 @@ export default {
     methods: {
         placeBet: function(event) {
             this.playerBet = parseInt(event.nativeEvent.text);
+            this.bet();
+        },
+        bet: function() {
+            Keyboard.dismiss();
+            console.log(this.playerBet);
             if(this.playerBet > this.player.Money) {
                 alert("You cannot bet more than you have.");
                 this.playerBet = 0;
@@ -95,21 +106,32 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding: 20;
+    padding: 10;
     width: 100%;
 }
 
 .dealer {
-    height: 40%;
+    height: 35%;
 }
 
 .player {
-    height: 40%;
+    height: 35%;
 }
 
 .controls {
-    height: 20%;
+    height: 30%;
     padding-top: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .input {
@@ -117,5 +139,13 @@ export default {
     padding: 10;
     height: 40;
     width: 60%;
+    border-radius: 6;
+}
+
+.button {
+    margin: 10;
+    padding: 10;
+    background-color: aqua;
+    border-radius: 6;
 }
 </style>
