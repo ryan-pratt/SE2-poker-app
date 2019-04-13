@@ -35,8 +35,8 @@ module.exports = function(deckStack) {
             this.Hand.push(deckStack.pop());
         },
         DealerHitLogic: function(deckStack) {//dealer hit
-            var continue = true;
-            while(continue){
+            var cont = true;
+            while(cont){
                 var sum = this.calCardVals();
                 if(sum[1]>0){//if we even have an ace
                     if(sum[1]<=16){//if the largest possible val is <=16
@@ -53,11 +53,11 @@ module.exports = function(deckStack) {
                             this.hit(deckStack);
                         }
                         else{
-                            continue = false;//stand
+                            cont = false;//stand
                         }
                     }
                     else{
-                        continue = false;//stand
+                        cont = false;//stand
                     }
                 }
                 else{//if no ace present
@@ -65,7 +65,7 @@ module.exports = function(deckStack) {
                         this.hit(deckStack);
                     }
                     else{
-                        continue = false;//stand
+                        cont = false;//stand
                     }
                 }
             }
