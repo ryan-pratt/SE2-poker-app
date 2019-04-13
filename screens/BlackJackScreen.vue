@@ -3,14 +3,14 @@
         <view class="table">
             <view class="table-section dealer">
                 <card v-for="(card, index) in dealer.Hand"
-                    :key="card[0]"
-                    :value="card[1]"
+                    :key="card.id"
+                    :value="card.val"
                     :face-up="index == 0 || dealerTurnStarted" />
             </view>
             <view class="table-section player">
                 <card v-for="card in player.Hand"
-                    :key="card[0]"
-                    :value="card[1]" />
+                    :key="card.id"
+                    :value="card.val" />
             </view>
             <view class="table-section controls">
                 <text-input class="input" 
