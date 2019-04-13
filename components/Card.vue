@@ -4,11 +4,15 @@
             'card-up': faceUp,
             'card-down': !faceUp
         }">
-        <text v-if="faceUp" class="card-text">{{value}}</text>
+        <image class="image" v-if="faceUp" :source="image" :resizeMode="resizeMode" />
     </view>
 </template>
     
 <script>
+import ImageResizeMode from 'react-native/Libraries/Image/ImageResizeMode';
+
+const ImageLibrary = require('../logic/ImageLibrary');
+
 export default {
     props: {
         value: {
@@ -18,6 +22,16 @@ export default {
             type: Boolean,
             default: true
         }
+    },
+    data: function() {
+        return {
+            resizeMode: ImageResizeMode.contain
+        };
+    },
+    computed: {
+        image: function() {
+            return ImageLibrary[this.value].uri;
+        }
     }
 }
 </script>
@@ -25,16 +39,20 @@ export default {
 <style>
 .card {
     width: 80;
-    height: 120;
+    height: 116;
     margin: 10;
-    padding: 20;
-}
-
-.card-up {
-    background-color: white;
+    padding: 0;
+    border-radius: 3;
 }
 
 .card-down {
     background-color: #7777ff
+}
+
+.image {
+    width: 80;
+    height: 116;
+    margin: 0;
+    padding: 0;
 }
 </style>

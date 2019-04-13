@@ -62,9 +62,14 @@ export default {
                 this.start();
             }
         },
-        start: function() {
+        start: async function() {
             this.dealer.startHand(this.deck);
+            await this.sleep(10);
             this.player.startHand(this.deck);
+            await this.sleep(10);
+        },
+        sleep: function(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
         }
     },
     components: {
