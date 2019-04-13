@@ -34,33 +34,39 @@ module.exports = function(deckStack) {
         hit: function(deckStack) {
             this.Hand.push(deckStack.pop());
         },
-        somethingElse: function(deckStack) {//dealer hit
-            var ace = false;
-            while(true){
+        DealerHitLogic: function(deckStack) {//dealer hit
+            var continue = true;
+            while(continue){
                 var sum = this.calCardVals();
-                if(sum[1]!=0){
-                    ace = true;
+                if(sum[1]>0){//if we even have an ace
+                    if(sum[1]<=16){//if the largest possible val is <=16
+                        this.hit(deckStack);
+                    }
+                    else if(sum[1]==17){//if the largest possible val ==17
+                        this.hit(deckStack);
+                    }
+                    else if(sum[1]>21){//if largest is bust
+                        if(sum[0]<16){//but smallest is <16
+                            this.hit(deckStack);
+                        }
+                        else if(sum[0]==17){//but smallest is ==17
+                            this.hit(deckStack);
+                        }
+                        else{
+                            continue = false;//stand
+                        }
+                    }
+                    else{
+                        continue = false;//stand
+                    }
                 }
-                if(sum[0]==21||sum[1]==21){//if 21 -> stop
-                    break;
-                }
-                else if(!ace&&(sum[0]>17)){//if no ace, and total >17 -> stop
-                    break;
-                }
-                else if (ace&&(sum[1]==17)){//if hand with high ace, but total ==17 ->hit
-                    this.Hand.push(deckStack.pop());
-                }
-                else if(ace&&(sum[0]<=17)){//if hand with low ace, but total <=17 ->hit
-                    this.Hand.push(deckStack.pop());
-                }
-                else if(sum[0]<=16){//if hand with no ace, <=16 -> hit
-                    this.Hand.push(deckStack.pop());
-                }
-                else if(ace&&(sum[1]>17)){//if hand with high ace, and total > 17 -> hit
-                    this.Hand.push(deckStack.pop());
-                }
-                else{
-                    console.log("uh oh!");
+                else{//if no ace present
+                    if(sum[0]<16){
+                        this.hit(deckStack);
+                    }
+                    else{
+                        continue = false;//stand
+                    }
                 }
             }
         }
