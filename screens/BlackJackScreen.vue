@@ -15,8 +15,7 @@
             <view class="table-section controls">
                 <text-input class="input" 
                     keyboard-type="numeric"
-                    :value="playerBet"
-                    :on-end-editing="placeBet()" />
+                    :on-submit-editing="placeBet" />
             </view>
         </view>
     </keyboard-avoiding-view>
@@ -43,7 +42,7 @@ export default {
             dealer: null,
             player: null,
 
-            playerBet: '',
+            playerBet: null,
             dealerTurnStarted: false
         };
     },
@@ -53,7 +52,8 @@ export default {
         this.player = Player(2000);
     },
     methods: {
-        placeBet: function() {
+        placeBet: function(event) {
+            this.playerBet = parseInt(event.nativeEvent.text);
             if(this.playerBet > this.player.Money) {
                 alert("You cannot bet more than you have.");
                 this.playerBet = 0;
@@ -63,8 +63,8 @@ export default {
             }
         },
         start: function() {
-            // this.dealer.startHand(this.deck);
-            // this.player.startHand(this.deck);
+            this.dealer.startHand(this.deck);
+            this.player.startHand(this.deck);
         }
     },
     components: {
