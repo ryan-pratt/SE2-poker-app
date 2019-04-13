@@ -25,30 +25,28 @@ module.exports = function(playerMoney){
         doubleDown: function(runBet) {
             //TODO
         },
-
         calCardVals: function() {//player card vals
             let sum=[0,0];
-            // for(let i = 0; i < this.Hand.length; i++) {//for the length of the hand
-            //     let card = this.Hand[i];
-            //     let cardN = card.slice(0,card.length-1);
-            //     if(cardN.equals('1')) {//if card is Ace
-            //         sum[0]+= 1;
-            //         sum[1]+= sum[0]+11;//optional val of Ace
-                    
-            //     }
-            //     else if(cardN.length==1) {//if card is 2-9 inclusive
-            //         sum[0]+= parseInt(cardN);
-            //         if(sum[1]!=0){//if Ace is present
-            //             sum[1]+= parseInt(cardN);
-            //         }
-            //     }
-            //     else{//if card is face, via elim.
-            //         sum[0]+= 10;
-            //         if(sum[1]!=0){//if Ace is present
-            //             sum[1]+= 10;
-            //         }
-            //     }
-            // }
+            for(let i = 0; i < this.Hand.length; i++) {//for the length of the hand
+                let card = this.Hand[i];
+                let cardN = card.slice(0,card.length-1);
+                if(cardN.equals('1')) {//if card is Ace
+                    sum[1]= sum[0]+11;//optional val of Ace
+                    sum[0]+= 1;
+                }
+                else if(cardN.length==1) {//if card is 2-9 inclusive
+                    sum[0]+= parseInt(cardN);
+                    if(sum[1]!=0){//if Ace is present
+                        sum[1]+= parseInt(cardN);
+                    }
+                }
+                else{//if card is face, via elim.
+                    sum[0]+= 10;
+                    if(sum[1]!=0){//if Ace is present
+                        sum[1]+= 10;
+                    }
+                }
+            }
             return sum;
         },
     };
