@@ -27,7 +27,6 @@ import { KeyboardAvoidingView } from 'react-native';
 
 import Card from '../components/Card';
 
-const BlackJack = require('../logic/BlackJack');
 const Deck = require('../logic/Deck');
 const Dealer = require('../logic/Dealer');
 const Player = require('../logic/Player');
@@ -44,7 +43,7 @@ export default {
             dealer: null,
             player: null,
 
-            playerBet: 0,
+            playerBet: '',
             dealerTurnStarted: false
         };
     },
@@ -105,6 +104,7 @@ export default {
 
 .controls {
     height: 20%;
+    padding-top: 0;
 }
 
 .input {
