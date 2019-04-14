@@ -70,6 +70,20 @@ export default {
             state: 0, // 0 - bet, 1 - player's turn, 2 - dealer's turn
         };
     },
+    watch: {
+        state: function (val) {
+            switch(val){
+                case 1:
+                    this.playerTurn();
+                    break;
+                case 2:
+                    this.startDealerTurn();
+                    break;
+                default:
+                    this.startNextHand();
+            }
+        }
+    },
     created: function() {
         this.deck = Deck();
         this.dealer = Dealer();
@@ -85,19 +99,28 @@ export default {
             }
             else {
                 this.player.bet(this.playerBet);
-                this.start();
+                this.startRound();
             }
         },
-        start: async function() {
-            this.nextState();
+        startRound: async function() {
             this.dealer.startHand(this.deck);
             await this.sleep(50);
             this.player.startHand(this.deck);
             await this.sleep(50); //sometimes cards are rendering before the hands are loaded
+            this.nextState();
         },
 
+        playerTurn: function() {
+            if(this.player.isBust()){
+                //TODO
+            }
+            else if(this.player.is21()){
+                //TODO
+            }
+        },
         playerHit: function() {
             this.player.hit(this.deck);
+            this.playerTurn();
         },
         playerDouble: function() {
             this.player.doubleDown(this.playerBet, this.deck);
@@ -105,6 +128,14 @@ export default {
         },
         playerStand: function() {
             this.nextState();
+        },
+
+        startDealerTurn: function() {
+            console.log('yay');
+        },
+
+        startNextHand: function() {
+            this.playerBet = 0;
         },
 
         nextState: function() {
