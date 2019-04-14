@@ -6,7 +6,8 @@ module.exports = function(deckStack) {
         ],
         fourth: {id: 0, val: 'any'},
         fifth: {id: 0, val: 'any'},
-    
+        pot = 0,
+
         resetFlush: function() {
             this.flush = [{id: 0, val: 'any'},
                           {id: 0, val: 'any'},
@@ -18,6 +19,12 @@ module.exports = function(deckStack) {
         },
         resetFifth: function() {
             this.fifth = {id: 0, val: 'any'};
+        },
+        resetPot: function(){
+            this.pot = 0;
+        },
+        raisePot: function(bet){
+            this.pot += bet;
         },
         revealFlush : function(deckStack){
             for(let i = 0;i<3;i++){
