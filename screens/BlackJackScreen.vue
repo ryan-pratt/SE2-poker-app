@@ -5,7 +5,7 @@
                 <card v-for="(card, index) in dealer.Hand"
                     :key="card.id"
                     :value="card.val"
-                    :face-up="index == 0 || dealerTurnStarted" />
+                    :face-up="index == 0 || state == 2" />
             </view>
             <view class="table-section player">
                 <card v-for="card in player.Hand"
@@ -15,10 +15,12 @@
             <view class="table-section controls">
                 <text>Current funds: {{player.Money}}</text>
                 <view class="row">
-                    <text-input class="input" 
+                    <text-input class="input"
                         keyboard-type="numeric"
-                        :on-submit-editing="placeBet" />
-                    <touchable-opacity class="button" :on-press="bet">
+                        placeholder="Input bet amount"
+                        :editable="state == 0"
+                        :on-end-editing="placeBet" />
+                    <touchable-opacity v-if="state == 0" class="button" :on-press="dismissKeyboard">
                         <text>Bet</text>
                     </touchable-opacity>
                 </view>
@@ -49,7 +51,7 @@ export default {
             player: null,
 
             playerBet: null,
-            dealerTurnStarted: false
+            state: 0, // 0 - bet, 1 - player's turn, 2 - dealer's turn
         };
     },
     created: function() {
@@ -59,25 +61,29 @@ export default {
     },
     methods: {
         placeBet: function(event) {
+            this.dismissKeyboard();
             this.playerBet = parseInt(event.nativeEvent.text);
-            this.bet();
-        },
-        bet: function() {
-            Keyboard.dismiss();
-            console.log(this.playerBet);
             if(this.playerBet > this.player.Money) {
                 alert("You cannot bet more than you have.");
-                this.playerBet = 0;
+                this.playerBet = this.player.Money;
             }
             else {
+                this.player.bet(this.playerBet);
                 this.start();
             }
         },
         start: async function() {
+            this.nextState();
             this.dealer.startHand(this.deck);
-            await this.sleep(10);
+            await this.sleep(50);
             this.player.startHand(this.deck);
-            await this.sleep(10);
+            await this.sleep(50); //sometimes cards are rendering before the hands are loaded
+        },
+        nextState: function() {
+            this.state = (this.state + 1) % 2;
+        },
+        dismissKeyboard: function() {
+            Keyboard.dismiss();
         },
         sleep: function(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
@@ -145,6 +151,7 @@ export default {
 .button {
     margin: 10;
     padding: 10;
+    height: 40;
     background-color: aqua;
     border-radius: 6;
 }

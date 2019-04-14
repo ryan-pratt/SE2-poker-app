@@ -3,8 +3,8 @@ module.exports = function(playerMoney){
         Hand: [],
         Money: playerMoney,
 
-        bet: function(initBet) {
-            //TODO
+        bet: function(amount) {
+            this.Money -= amount;
         },
         startHand: function(deckStack) {
             this.Hand = [];
@@ -22,8 +22,9 @@ module.exports = function(playerMoney){
         hit: function(deckStack) {
             this.Hand.push(deckStack.pop());
         },
-        doubleDown: function(runBet) {
-            //TODO
+        doubleDown: function(runBet, deckStack) {
+            this.bet(runBet);
+            this.hit(deckStack);
         },
         calCardVals: function() {//player card vals
             let sum=[0,0];
