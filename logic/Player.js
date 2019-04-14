@@ -29,9 +29,9 @@ module.exports = function(playerMoney){
         calCardVals: function() {//player card vals
             let sum=[0,0];
             for(let i = 0; i < this.Hand.length; i++) {//for the length of the hand
-                let card = this.Hand[i];
+                let card = this.Hand[i].val;
                 let cardN = card.slice(0,card.length-1);
-                if(cardN.equals('1')) {//if card is Ace
+                if(cardN == '1') {//if card is Ace
                     sum[1]= sum[0]+11;//optional val of Ace
                     sum[0]+= 1;
                 }
