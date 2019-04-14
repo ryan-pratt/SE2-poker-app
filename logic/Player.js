@@ -22,9 +22,13 @@ module.exports = function(playerMoney){
             let sum = this.calCardVals();
             return sum[0] > 21;
         },
-        hit: async function(deckStack) {
+        hit: function(deckStack) {
             this.Hand.push(deckStack.pop());
-            await new Promise(resolve => setTimeout(resolve, 100));
+            this.Hand.forEach(card => {
+                console.log(card);
+            });
+            new Promise(resolve => setTimeout(resolve, 100))
+                .then(() => {return;});
         },
         doubleDown: function(runBet, deckStack) {
             this.bet(runBet);
@@ -32,6 +36,8 @@ module.exports = function(playerMoney){
         },
         calCardVals: function() {//player card vals
             let sum=[0,0];
+            console.log('player');
+            console.log(this.Hand);
             this.Hand.forEach(thisCard => {
                 let card = thisCard.val;
                 let cardN = card.slice(0,card.length-1);

@@ -18,9 +18,9 @@
                     <text-input class="input"
                         keyboard-type="numeric"
                         placeholder="Input bet amount"
-                        :editable="state == 0"
+                        :editable="state === 0"
                         :on-end-editing="placeBet" />
-                    <touchable-opacity v-if="state == 0" class="bet-button" :on-press="dismissKeyboard">
+                    <touchable-opacity v-if="state === 0" class="bet-button" :on-press="dismissKeyboard">
                         <text>Bet</text>
                     </touchable-opacity>
                 </view>
@@ -94,7 +94,7 @@ export default {
         this.player = Player(2000);
     },
     methods: {
-        placeBet: function(event) {
+        placeBet: async function(event) {
             this.dismissKeyboard();
             this.playerBet = parseInt(event.nativeEvent.text);
             if(this.playerBet === null
@@ -110,7 +110,7 @@ export default {
             }
             else {
                 this.player.bet(this.playerBet);
-                this.startRound();
+                await this.startRound();
                 this.nextState();
             }
         },
@@ -123,11 +123,11 @@ export default {
 
         playerTurn: function() {
             if(this.player.isBust()){
-                console.log('bust');
-                this.state == 0;
+                alert('You busted!');
+                this.state = 0;
             }
             else if(this.player.is21()){
-                console.log('21');
+                alert('Blackjack!');
                 this.nextState();
             }
         },
@@ -153,9 +153,8 @@ export default {
                 this.playerWins();
                 return;
             }
-            let playerVals = this.player.calCardVals();
-            let dealerVals = this.dealer.calCardVals();
             
+            let playerVals = this.player.calCardVals();
             let playerTotal = 0;
             if(playerVals[1] > 21){
                 playerTotal = playerVals[0];
@@ -164,6 +163,7 @@ export default {
                 playerTotal = playerVals[1];
             }
 
+            let dealerVals = this.dealer.calCardVals();
             let dealerTotal = 0;
             if(dealerVals[1] > 21){
                 dealerTotal = dealerVals[0];
@@ -174,9 +174,14 @@ export default {
 
             if(playerTotal > dealerTotal){
                 this.playerWins();
+                alert('You won');
             }
             else if(playerTotal == dealerTotal){
                 this.player.Money += this.playerBet;
+                alert('Tie');
+            }
+            else {
+                alert('The dealer won!!! :D');
             }
 
             this.nextState();

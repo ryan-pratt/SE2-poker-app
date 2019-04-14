@@ -12,6 +12,8 @@ module.exports = function(deckStack) {
         },
         calCardVals: function(){//dealer card vals
             var sum=[0,0];
+            console.log('dealer');
+            console.log(this.Hand);
             this.Hand.forEach(thisCard => {
                 var card = thisCard.val;
                 var cardN = card.slice(0,card.length-1);
@@ -34,9 +36,10 @@ module.exports = function(deckStack) {
             });
             return sum;
         },
-        hit: async function(deckStack) {
+        hit: function(deckStack) {
             this.Hand.push(deckStack.pop());
-            await new Promise(resolve => setTimeout(resolve, 100));
+            new Promise(resolve => setTimeout(resolve, 100))
+                .then(() => {return;});
         },
         isBust: function() {
             let sum = this.calCardVals();
