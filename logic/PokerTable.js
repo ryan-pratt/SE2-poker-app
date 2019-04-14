@@ -1,17 +1,19 @@
-module.exports = function(deckStack) {
+module.exports = function() {
     return{
-        flush: [{id: 0, val: 'any'},
-                {id: 0, val: 'any'},
-                {id: 0, val: 'any'}
+        flush: [
+            {id: 0, val: 'any'},
+            {id: 0, val: 'any'},
+            {id: 0, val: 'any'}
         ],
         fourth: {id: 0, val: 'any'},
         fifth: {id: 0, val: 'any'},
         pot = 0,
 
         resetFlush: function() {
-            this.flush = [{id: 0, val: 'any'},
-                          {id: 0, val: 'any'},
-                          {id: 0, val: 'any'}
+            this.flush = [
+                {id: 0, val: 'any'},
+                {id: 0, val: 'any'},
+                {id: 0, val: 'any'}
             ];
         },
         resetFourth: function() {
