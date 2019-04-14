@@ -20,9 +20,25 @@
                         placeholder="Input bet amount"
                         :editable="state == 0"
                         :on-end-editing="placeBet" />
-                    <touchable-opacity v-if="state == 0" class="button" :on-press="dismissKeyboard">
+                    <touchable-opacity v-if="state == 0" class="bet-button" :on-press="dismissKeyboard">
                         <text>Bet</text>
                     </touchable-opacity>
+                </view>
+
+                <view v-if="state == 1" class="column">
+                    <view class="row">
+                        <touchable-opacity class="action-button" :on-press="playerHit">
+                            <text class="action-button-text">Hit</text>
+                        </touchable-opacity>
+                        <touchable-opacity class="action-button" :on-press="playerDouble">
+                            <text class="action-button-text">Double</text>
+                        </touchable-opacity>
+                    </view>
+                    <view class="row">
+                        <touchable-opacity class="action-button" :on-press="playerStand">
+                            <text class="action-button-text">Stand</text>
+                        </touchable-opacity>
+                    </view>
                 </view>
             </view>
         </view>
@@ -79,6 +95,18 @@ export default {
             this.player.startHand(this.deck);
             await this.sleep(50); //sometimes cards are rendering before the hands are loaded
         },
+
+        playerHit: function() {
+            this.player.hit(this.deck);
+        },
+        playerDouble: function() {
+            this.player.doubleDown(this.playerBet, this.deck);
+            this.nextState();
+        },
+        playerStand: function() {
+            this.nextState();
+        },
+
         nextState: function() {
             this.state = (this.state + 1) % 2;
         },
@@ -140,6 +168,14 @@ export default {
     align-items: center;
 }
 
+.column {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .input {
     background-color: white;
     padding: 10;
@@ -148,11 +184,31 @@ export default {
     border-radius: 6;
 }
 
-.button {
+.bet-button {
     margin: 10;
     padding: 10;
     height: 40;
     background-color: aqua;
     border-radius: 6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.action-button {
+    margin: 10;
+    margin-bottom: 0;
+    padding: 10;
+    height: 50;
+    width: 25%;
+    background-color: darkslategrey;
+    border-radius: 6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.action-button-text {
+    color: white;
 }
 </style>
