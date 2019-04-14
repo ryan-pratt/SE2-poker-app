@@ -2,8 +2,11 @@ module.exports = function(deckStack) {
     return {
         Hand: [],
 
-        startHand: function(deckStack){
+        resetHand: function() {
             this.Hand = [];
+        },
+        startHand: function(deckStack){
+            this.resetHand();
             this.hit(deckStack);
             this.hit(deckStack);
         },
@@ -34,6 +37,10 @@ module.exports = function(deckStack) {
         hit: async function(deckStack) {
             this.Hand.push(deckStack.pop());
             await new Promise(resolve => setTimeout(resolve, 100));
+        },
+        isBust: function() {
+            let sum = this.calCardVals();
+            return sum[0] > 21;
         },
         DealerHitLogic: function(deckStack) {//dealer hit
             var cont = true;

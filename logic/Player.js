@@ -6,8 +6,11 @@ module.exports = function(playerMoney){
         bet: function(amount) {
             this.Money -= amount;
         },
-        startHand: function(deckStack) {
+        resetHand: function() {
             this.Hand = [];
+        },
+        startHand: function(deckStack) {
+            this.resetHand();
             this.hit(deckStack);
             this.hit(deckStack);
         },
@@ -29,8 +32,8 @@ module.exports = function(playerMoney){
         },
         calCardVals: function() {//player card vals
             let sum=[0,0];
-            for(let i = 0; i < this.Hand.length; i++) {//for the length of the hand
-                let card = this.Hand[i].val;
+            this.Hand.forEach(thisCard => {
+                let card = thisCard.val;
                 let cardN = card.slice(0,card.length-1);
                 if(cardN == '1') {//if card is Ace
                     sum[1]= sum[0]+11;//optional val of Ace
@@ -48,7 +51,7 @@ module.exports = function(playerMoney){
                         sum[1]+= 10;
                     }
                 }
-            }
+            });
             return sum;
         },
     };

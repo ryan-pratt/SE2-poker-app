@@ -80,12 +80,16 @@ export default {
                     this.startDealerTurn();
                     break;
                 default:
-                    this.startNextHand();
+                    this.playerBet = 0;
+                    // this.startRound();
+                    this.player.resetHand();
+                    this.dealer.resetHand();
+
             }
         }
     },
     created: function() {
-        this.deck = Deck();
+        // this.deck = Deck();
         this.dealer = Dealer();
         this.player = Player(2000);
     },
@@ -107,21 +111,23 @@ export default {
             else {
                 this.player.bet(this.playerBet);
                 this.startRound();
+                this.nextState();
             }
         },
         startRound: async function() {
+            this.deck = Deck();
             this.dealer.startHand(this.deck);
             this.player.startHand(this.deck);
             await this.sleep(200); //sometimes cards are rendering before the hands are loaded
-            this.nextState();
         },
 
         playerTurn: function() {
             if(this.player.isBust()){
+                console.log('bust');
                 this.state == 0;
-                this.startNextHand();
             }
             else if(this.player.is21()){
+                console.log('21');
                 this.nextState();
             }
         },
@@ -177,10 +183,6 @@ export default {
         },
         playerWins: function() {
             this.player.Money += 2 * this.playerBet;
-        },
-
-        startNextHand: function() {
-            this.playerBet = 0;
         },
 
         nextState: function() {
