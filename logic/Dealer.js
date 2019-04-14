@@ -62,7 +62,7 @@ module.exports = function(deckStack) {
                     }
                 }
                 else{//if no ace present
-                    if(sum[0]<16){
+                    if(sum[0]<=16){
                         this.hit(deckStack);
                     }
                     else{

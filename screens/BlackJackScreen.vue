@@ -30,7 +30,7 @@
                         <touchable-opacity class="action-button" :on-press="playerHit">
                             <text class="action-button-text">Hit</text>
                         </touchable-opacity>
-                        <touchable-opacity class="action-button" :on-press="playerDouble">
+                        <touchable-opacity v-if="player.Money >= playerBet" class="action-button" :on-press="playerDouble">
                             <text class="action-button-text">Double</text>
                         </touchable-opacity>
                     </view>
@@ -119,10 +119,10 @@ export default {
 
         playerTurn: function() {
             if(this.player.isBust()){
-                //TODO
+                this.startNextHand
             }
             else if(this.player.is21()){
-                //TODO
+                this.nextState();
             }
         },
         playerHit: function() {
