@@ -111,7 +111,6 @@ export default {
         },
         startRound: async function() {
             this.dealer.startHand(this.deck);
-            // await this.sleep(100);
             this.player.startHand(this.deck);
             await this.sleep(200); //sometimes cards are rendering before the hands are loaded
             this.nextState();
@@ -119,7 +118,8 @@ export default {
 
         playerTurn: function() {
             if(this.player.isBust()){
-                this.startNextHand
+                this.state == 0;
+                this.startNextHand();
             }
             else if(this.player.is21()){
                 this.nextState();
@@ -143,8 +143,42 @@ export default {
         },
 
         finishRound: function() {
-            //TODO: determine winner
+            if(this.dealer.isBust()){
+                this.playerWins();
+                return;
+            }
+            let playerVals = this.player.calCardVals();
+            let dealerVals = this.dealer.calCardVals();
+            
+            let playerTotal = 0;
+            if(playerVals[1] > 21){
+                playerTotal = playerVals[0];
+            }
+            else {
+                playerTotal = playerVals[1];
+            }
+
+            let dealerTotal = 0;
+            if(dealerVals[1] > 21){
+                dealerTotal = dealerVals[0];
+            }
+            else {
+                dealerTotal = dealerVals[1];
+            }
+
+            if(playerTotal > dealerTotal){
+                this.playerWins();
+            }
+            else if(playerTotal == dealerTotal){
+                this.player.Money += this.playerBet;
+            }
+
+            this.nextState();
         },
+        playerWins: function() {
+            this.player.Money += 2 * this.playerBet;
+        },
+
         startNextHand: function() {
             this.playerBet = 0;
         },
