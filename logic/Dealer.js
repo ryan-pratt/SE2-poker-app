@@ -1,4 +1,4 @@
-module.exports = function(deckStack) {
+module.exports = function(deckStack) {//<= is it possible that this deckStack is messing with the game?, linter says its not used...
     return {
         Hand: [],
 
