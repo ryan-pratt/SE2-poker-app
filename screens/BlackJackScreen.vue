@@ -93,7 +93,14 @@ export default {
         placeBet: function(event) {
             this.dismissKeyboard();
             this.playerBet = parseInt(event.nativeEvent.text);
-            if(this.playerBet > this.player.Money) {
+            if(this.playerBet === null
+                    || this.playerBet === undefined
+                    || this.playerBet === NaN
+                    || this.playerBet <= 0) {
+                alert("You must bet a positive amount.");
+                this.playerBet = 0;
+            }
+            else if(this.playerBet > this.player.Money) {
                 alert("You cannot bet more than you have.");
                 this.playerBet = this.player.Money;
             }
@@ -104,9 +111,9 @@ export default {
         },
         startRound: async function() {
             this.dealer.startHand(this.deck);
-            await this.sleep(50);
+            await this.sleep(100);
             this.player.startHand(this.deck);
-            await this.sleep(50); //sometimes cards are rendering before the hands are loaded
+            await this.sleep(100); //sometimes cards are rendering before the hands are loaded
             this.nextState();
         },
 
@@ -139,7 +146,7 @@ export default {
         },
 
         nextState: function() {
-            this.state = (this.state + 1) % 2;
+            this.state = (this.state + 1) % 3;
         },
         dismissKeyboard: function() {
             Keyboard.dismiss();

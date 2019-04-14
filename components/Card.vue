@@ -28,6 +28,9 @@ export default {
             resizeMode: ImageResizeMode.contain
         };
     },
+    mounted: function() {
+        console.log(this.value);
+    },
     computed: {
         image: function() {
             return ImageLibrary[this.value].uri;
