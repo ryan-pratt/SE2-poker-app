@@ -111,9 +111,9 @@ export default {
         },
         startRound: async function() {
             this.dealer.startHand(this.deck);
-            await this.sleep(100);
+            // await this.sleep(100);
             this.player.startHand(this.deck);
-            await this.sleep(100); //sometimes cards are rendering before the hands are loaded
+            await this.sleep(200); //sometimes cards are rendering before the hands are loaded
             this.nextState();
         },
 
@@ -138,9 +138,13 @@ export default {
         },
 
         startDealerTurn: function() {
-            console.log('yay');
+            this.dealer.DealerHitLogic(this.deck);
+            this.finishRound();
         },
 
+        finishRound: function() {
+            //TODO: determine winner
+        },
         startNextHand: function() {
             this.playerBet = 0;
         },

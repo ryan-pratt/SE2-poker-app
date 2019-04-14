@@ -19,8 +19,9 @@ module.exports = function(playerMoney){
             let sum = this.calCardVals();
             return sum[0] > 21;
         },
-        hit: function(deckStack) {
+        hit: async function(deckStack) {
             this.Hand.push(deckStack.pop());
+            await new Promise(resolve => setTimeout(resolve, 100));
         },
         doubleDown: function(runBet, deckStack) {
             this.bet(runBet);

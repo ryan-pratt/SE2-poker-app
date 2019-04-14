@@ -9,8 +9,8 @@ module.exports = function(deckStack) {
         },
         calCardVals: function(){//dealer card vals
             var sum=[0,0];
-            for(let i = 0; i < this.Hand.length; i++){//for the length of the hand
-                var card = this.Hand[i].val;
+            this.Hand.forEach(thisCard => {
+                var card = thisCard.val;
                 var cardN = card.slice(0,card.length-1);
                 if(cardN == '1'){//if card is Ace 
                     sum[1]= sum[0] + 11;//optional val of Ace
@@ -28,11 +28,12 @@ module.exports = function(deckStack) {
                         sum[1]+= 10;
                     }
                 }
-            }
+            });
             return sum;
         },
-        hit: function(deckStack) {
+        hit: async function(deckStack) {
             this.Hand.push(deckStack.pop());
+            await new Promise(resolve => setTimeout(resolve, 100));
         },
         DealerHitLogic: function(deckStack) {//dealer hit
             var cont = true;
