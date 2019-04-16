@@ -36,6 +36,13 @@ module.exports = function(){
                 {num: 'any', suit: 'same'},
                 {num: 'any', suit: 'same'}
             ],
+            [//straight
+                {num: 'n<=13', suit: 'any'},
+                {num: 'n-1', suit: 'any'},
+                {num: 'n-2', suit: 'any'},
+                {num: 'n-3', suit: 'any'},
+                {num: 'n-4', suit: 'any'}
+            ],
             [//three kind
                 {num: 'n', suit: 'any'},
                 {num: 'n', suit: 'any'},
