@@ -16,7 +16,8 @@ const ImageLibrary = require('../logic/ImageLibrary');
 export default {
     props: {
         value: {
-            type: String
+            type: String,
+            required: true
         },
         faceUp: {
             type: Boolean,

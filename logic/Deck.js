@@ -53,10 +53,11 @@ module.exports = function() {
         {id: 51, val: '12h'},
         {id: 52, val: '13h'}
     ];
+    
     //this for loop shuffles the deck
     for (let i = 0; i < 3000; i++) {
-        var num1 = Math.ceil(52*Math.random());
-        var num2 = Math.ceil(52*Math.random());
+        var num1 = Math.floor(52*Math.random());
+        var num2 = Math.floor(52*Math.random());
         var temp = newDeck[num1];
         newDeck[num1] = newDeck[num2];
         newDeck[num2] = temp;
