@@ -96,7 +96,7 @@ export default {
     methods: {
         placeBet: async function(event) {
             this.dismissKeyboard();
-            if(!/\d+.\d+/.test(event.nativeEvent.text.length)) {
+            if(!/\d+.?\d+/.test(event.nativeEvent.text.length)) {
                 alert("Please enter a valid number.");
                 return;
             }
