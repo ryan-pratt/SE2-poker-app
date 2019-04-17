@@ -96,20 +96,21 @@ export default {
     methods: {
         placeBet: async function(event) {
             this.dismissKeyboard();
-            if(!/\d+.?\d*/.test(event.nativeEvent.text)) {
+            if(!/^\d+$/.test(event.nativeEvent.text)) {
                 alert("Please enter a valid number.");
                 return;
             }
 
-            this.playerBet = parseInt(event.nativeEvent.text);
-            if(this.playerBet === null
-                    || this.playerBet === undefined
-                    || this.playerBet === NaN
-                    || this.playerBet <= 0) {
+            let input = parseInt(event.nativeEvent.text);
+            if(input === null
+                    || input === undefined
+                    || input === NaN
+                    || input <= 0) {
                 alert("You must bet a positive number.");
                 this.playerBet = 0;
             }
             else {
+                this.playerBet = input;
                 if(this.playerBet > this.player.Money) {
                     alert("You cannot bet more than you have.");
                     this.playerBet = this.player.Money;
