@@ -96,12 +96,17 @@ export default {
     methods: {
         placeBet: async function(event) {
             this.dismissKeyboard();
+            if(event.nativeEvent.text.length === 0) {
+                alert("Please enter a bet.");
+                return;
+            }
+
             this.playerBet = parseInt(event.nativeEvent.text);
             if(this.playerBet === null
                     || this.playerBet === undefined
                     || this.playerBet === NaN
                     || this.playerBet <= 0) {
-                alert("You must bet a positive amount.");
+                alert("You must bet a positive number.");
                 this.playerBet = 0;
             }
             else if(this.playerBet > this.player.Money) {
