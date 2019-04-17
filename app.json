@@ -23,10 +23,14 @@
             "**/*"
         ],
         "ios": {
-            "supportsTablet": true
+            "supportsTablet": false,
+            "bundleIdentifier": "com.seii.pokerapp"
         },
         "packagerOpts": {
             "config": "rn-cli.config.js"
+        },
+        "android": {
+            "package": "com.seii.pokerapp"
         }
     }
 }
