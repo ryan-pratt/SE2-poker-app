@@ -179,14 +179,13 @@ export default {
     
                 if(playerTotal > dealerTotal){
                     this.playerWins();
-                    alert('You won');
                 }
                 else if(playerTotal == dealerTotal){
                     this.player.Money += this.playerBet;
                     alert('Tie');
                 }
                 else {
-                    alert('The dealer won!!! :D');
+                    alert('The dealer won');
                 }
             }
 
@@ -194,6 +193,7 @@ export default {
         },
         playerWins: function() {
             this.player.Money += 2 * this.playerBet;
+            alert('You won');
         },
 
         nextState: function() {
