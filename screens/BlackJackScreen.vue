@@ -96,8 +96,8 @@ export default {
     methods: {
         placeBet: async function(event) {
             this.dismissKeyboard();
-            if(event.nativeEvent.text.length === 0) {
-                alert("Please enter a bet.");
+            if(!/\d+.\d+/.test(event.nativeEvent.text.length)) {
+                alert("Please enter a valid number.");
                 return;
             }
 
@@ -109,14 +109,16 @@ export default {
                 alert("You must bet a positive number.");
                 this.playerBet = 0;
             }
-            else if(this.playerBet > this.player.Money) {
-                alert("You cannot bet more than you have.");
-                this.playerBet = this.player.Money;
-            }
             else {
-                this.player.bet(this.playerBet);
-                await this.startRound();
-                this.nextState();
+                if(this.playerBet > this.player.Money) {
+                    alert("You cannot bet more than you have.");
+                    this.playerBet = this.player.Money;
+                }
+                else {
+                    this.player.bet(this.playerBet);
+                    await this.startRound();
+                    this.nextState();
+                }
             }
         },
         startRound: async function() {
@@ -132,7 +134,6 @@ export default {
                 this.state = 0;
             }
             else if(this.player.is21()){
-                alert('Blackjack!');
                 this.nextState();
             }
         },
@@ -156,37 +157,37 @@ export default {
         finishRound: function() {
             if(this.dealer.isBust()){
                 this.playerWins();
-                return;
-            }
-            
-            let playerVals = this.player.calCardVals();
-            let playerTotal = 0;
-            if(playerVals[1] > 21){
-                playerTotal = playerVals[0];
             }
             else {
-                playerTotal = playerVals[1];
-            }
-
-            let dealerVals = this.dealer.calCardVals();
-            let dealerTotal = 0;
-            if(dealerVals[1] > 21){
-                dealerTotal = dealerVals[0];
-            }
-            else {
-                dealerTotal = dealerVals[1];
-            }
-
-            if(playerTotal > dealerTotal){
-                this.playerWins();
-                alert('You won');
-            }
-            else if(playerTotal == dealerTotal){
-                this.player.Money += this.playerBet;
-                alert('Tie');
-            }
-            else {
-                alert('The dealer won!!! :D');
+                let playerVals = this.player.calCardVals();
+                let playerTotal = 0;
+                if(playerVals[1] > 21){
+                    playerTotal = playerVals[0];
+                }
+                else {
+                    playerTotal = playerVals[1];
+                }
+    
+                let dealerVals = this.dealer.calCardVals();
+                let dealerTotal = 0;
+                if(dealerVals[1] > 21){
+                    dealerTotal = dealerVals[0];
+                }
+                else {
+                    dealerTotal = dealerVals[1];
+                }
+    
+                if(playerTotal > dealerTotal){
+                    this.playerWins();
+                    alert('You won');
+                }
+                else if(playerTotal == dealerTotal){
+                    this.player.Money += this.playerBet;
+                    alert('Tie');
+                }
+                else {
+                    alert('The dealer won!!! :D');
+                }
             }
 
             this.nextState();
