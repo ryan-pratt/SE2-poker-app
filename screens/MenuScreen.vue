@@ -2,6 +2,7 @@
     <view class='container'>
         <view class='banner'>
             <text class='hero-text'>Poker Game</text>
+            <text>Version {{buildNumber}}</text>
         </view>
 
         <touchable-opacity class='button' :on-press="startBlackJack">
@@ -11,6 +12,8 @@
 </template>
     
 <script>
+const pkg = require('../package.json');
+
 export default {
     props: {
         navigation: {
@@ -19,7 +22,7 @@ export default {
     },
     data: function() {
         return {
-
+            buildNumber: pkg.version
         };
     },
     methods: {

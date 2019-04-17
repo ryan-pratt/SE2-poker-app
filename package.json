@@ -19,5 +19,6 @@
         "babel-preset-expo": "^4.0.0",
         "vue-native-scripts": "0.0.14"
     },
-    "private": true
+    "private": true,
+    "version": "0.1.1"
 }
