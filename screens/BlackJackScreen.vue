@@ -132,7 +132,6 @@ export default {
                 this.state = 0;
             }
             else if(this.player.is21()){
-                alert('Blackjack!');
                 this.nextState();
             }
         },
@@ -156,9 +155,8 @@ export default {
         finishRound: function() {
             if(this.dealer.isBust()){
                 this.playerWins();
-                return;
             }
-            
+            else {
             let playerVals = this.player.calCardVals();
             let playerTotal = 0;
             if(playerVals[1] > 21){
@@ -187,6 +185,7 @@ export default {
             }
             else {
                 alert('The dealer won!!! :D');
+            }
             }
 
             this.nextState();
