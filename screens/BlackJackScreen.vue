@@ -5,7 +5,7 @@
                 <card v-for="(card, index) in dealer.Hand"
                     :key="card.id"
                     :value="card.val"
-                    :face-up="index == 0 || state == 2" />
+                    :face-up="index == 0 || dealerTurnStarted" />
             </view>
             <view class="table-section player">
                 <card v-for="card in player.Hand"
@@ -67,6 +67,8 @@ export default {
             dealer: null,
             player: null,
 
+            dealerTurnStarted: false,
+
             playerBet: null,
             state: 0, // 0 - bet, 1 - player's turn, 2 - dealer's turn
         };
@@ -81,10 +83,7 @@ export default {
                     this.startDealerTurn();
                     break;
                 default:
-                    this.$refs.betInput.clear();
-                    this.playerBet = 0;
-                    this.player.resetHand();
-                    this.dealer.resetHand();
+                    this.reset();
             }
         }
     },
@@ -149,6 +148,7 @@ export default {
         },
 
         startDealerTurn: function() {
+            this.dealerTurnStarted = true;
             this.dealer.DealerHitLogic(this.deck);
             this.finishRound();
         },
@@ -192,6 +192,13 @@ export default {
             alert('The dealer won');
         },
 
+        reset: function() {
+            this.dealerTurnStarted = false;
+            this.$refs.betInput.clear();
+            this.playerBet = 0;
+            this.player.resetHand();
+            this.dealer.resetHand();
+        },
         nextState: function() {
             this.state = (this.state + 1) % 3;
         },
