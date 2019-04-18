@@ -16,6 +16,7 @@
                 <text>Current funds: {{player.Money}}</text>
                 <view class="row">
                     <text-input class="input"
+                        ref="betInput"
                         keyboard-type="numeric"
                         placeholder="Input bet amount"
                         :editable="state === 0"
@@ -80,8 +81,8 @@ export default {
                     this.startDealerTurn();
                     break;
                 default:
+                    this.$refs.betInput.clear();
                     this.playerBet = 0;
-                    // this.startRound();
                     this.player.resetHand();
                     this.dealer.resetHand();
 
@@ -89,7 +90,6 @@ export default {
         }
     },
     created: function() {
-        // this.deck = Deck();
         this.dealer = Dealer();
         this.player = Player(2000);
     },
