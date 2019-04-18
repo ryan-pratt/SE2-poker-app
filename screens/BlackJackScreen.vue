@@ -85,7 +85,6 @@ export default {
                     this.playerBet = 0;
                     this.player.resetHand();
                     this.dealer.resetHand();
-
             }
         }
     },
@@ -94,7 +93,7 @@ export default {
         this.player = Player(2000);
     },
     methods: {
-        placeBet: async function(event) {
+        placeBet: function(event) {
             this.dismissKeyboard();
             if(!/^\d+$/.test(event.nativeEvent.text)) {
                 alert("Please enter a valid number.");
@@ -117,16 +116,15 @@ export default {
                 }
                 else {
                     this.player.bet(this.playerBet);
-                    await this.startRound();
+                    this.startRound();
                     this.nextState();
                 }
             }
         },
-        startRound: async function() {
+        startRound: function() {
             this.deck = Deck();
             this.dealer.startHand(this.deck);
             this.player.startHand(this.deck);
-            await this.sleep(200); //sometimes cards are rendering before the hands are loaded
         },
 
         playerTurn: function() {
@@ -154,47 +152,44 @@ export default {
             this.dealer.DealerHitLogic(this.deck);
             this.finishRound();
         },
-
         finishRound: function() {
-            if(this.dealer.isBust()){
-                this.playerWins();
-            }
-            else {
-                let playerVals = this.player.calCardVals();
-                let playerTotal = 0;
-                if(playerVals[1] > 21){
-                    playerTotal = playerVals[0];
-                }
-                else {
-                    playerTotal = playerVals[1];
-                }
-    
-                let dealerVals = this.dealer.calCardVals();
-                let dealerTotal = 0;
-                if(dealerVals[1] > 21){
-                    dealerTotal = dealerVals[0];
-                }
-                else {
-                    dealerTotal = dealerVals[1];
-                }
-    
-                if(playerTotal > dealerTotal){
+            this.sleep(1500).then(() => {
+                if(this.dealer.isBust()){
                     this.playerWins();
                 }
-                else if(playerTotal == dealerTotal){
-                    this.player.Money += this.playerBet;
-                    alert('Tie');
-                }
                 else {
-                    alert('The dealer won');
+                    let playerVals = this.player.calCardVals();
+                    let playerTotal = playerVals[1] > 21 ? playerVals[0] : playerVals[1];
+        
+                    let dealerVals = this.dealer.calCardVals();
+                    let dealerTotal = dealerVals[1] > 21 ? dealerVals[0] : dealerVals[1];
+        
+                    if(playerTotal == 0) alert('error calculating player totals');
+                    if(dealerTotal == 0) alert('error calculating dealer totals');
+    
+                    if(playerTotal > dealerTotal){
+                        this.playerWins();
+                    }
+                    else if(playerTotal == dealerTotal){
+                        this.tie();
+                    }
+                    else {
+                        this.dealerWins();
+                    }
                 }
-            }
-
-            this.nextState();
+                this.nextState();
+            });
         },
         playerWins: function() {
             this.player.Money += 2 * this.playerBet;
             alert('You won');
+        },
+        tie: function() {
+            this.player.Money += this.playerBet;
+            alert('Tie');
+        },
+        dealerWins: function(){
+            alert('The dealer won');
         },
 
         nextState: function() {
@@ -203,7 +198,7 @@ export default {
         dismissKeyboard: function() {
             Keyboard.dismiss();
         },
-        sleep: function(ms) {
+        sleep: async function(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
     },
