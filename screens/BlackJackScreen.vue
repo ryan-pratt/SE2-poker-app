@@ -69,6 +69,9 @@ export default {
 
             dealerTurnStarted: false,
 
+            playerTotal: null,
+            dealerTotal: null,
+
             playerBet: null,
             state: 0, // 0 - bet, 1 - player's turn, 2 - dealer's turn
         };
@@ -141,7 +144,14 @@ export default {
         },
         playerDouble: function() {
             this.player.doubleDown(this.playerBet, this.deck);
-            this.nextState();
+            this.playerBet+=this.playerBet;
+            if(this.player.isBust()){
+                alert('You busted!');
+                this.state = 0;
+            }
+            else{
+                this.nextState();
+            }
         },
         playerStand: function() {
             this.nextState();
@@ -159,18 +169,30 @@ export default {
                 }
                 else {
                     let playerVals = this.player.calCardVals();
-                    let playerTotal = playerVals[1] > 21 ? playerVals[0] : playerVals[1];
+                    new Promise(resolve => setTimeout(resolve, 400))
+                        .then(() => {return;});
+                    this.playerTotal = 0;//playerVals[1] > 21 ? playerVals[0] : playerVals[1];
+                    if(playerVals[1]>21||playerVals[1]==0) this.playerTotal = playerVals[0]
+                    else this.playerTotal = playerVals[1]
+                    
         
                     let dealerVals = this.dealer.calCardVals();
-                    let dealerTotal = dealerVals[1] > 21 ? dealerVals[0] : dealerVals[1];
+                    new Promise(resolve => setTimeout(resolve, 400))
+                        .then(() => {return;});
+                    this.dealerTotal = 0;//dealerVals[1] > 21 ? dealerVals[0] : dealerVals[1];
+                    
+                    if(dealerVals[1]>21||dealerVals[1]==0) this.dealerTotal = dealerVals[0]
+                    else this.dealerTotal = dealerVals[1]
         
-                    if(playerTotal == 0) alert('error calculating player totals');
-                    if(dealerTotal == 0) alert('error calculating dealer totals');
-    
-                    if(playerTotal > dealerTotal){
+                    if(playerVals[0] == 0 && playerVals[1] == 0) alert('error calculating player vals');
+                    if(this.playerTotal == 0) alert('error calculating player total');
+                    if(dealerVals[0] == 0 && dealerVals[1] == 0) alert('error calculating dealer vals');
+                    if(this.dealerTotal == 0) alert('error calculating dealer total');
+                    
+                    if(this.playerTotal > this.dealerTotal){
                         this.playerWins();
                     }
-                    else if(playerTotal == dealerTotal){
+                    else if(this.playerTotal == this.dealerTotal){
                         this.tie();
                     }
                     else {
@@ -196,6 +218,8 @@ export default {
             this.dealerTurnStarted = false;
             this.$refs.betInput.clear();
             this.playerBet = 0;
+            this.playerTotal = 0;
+            this.dealerTotal = 0;
             this.player.resetHand();
             this.dealer.resetHand();
         },
