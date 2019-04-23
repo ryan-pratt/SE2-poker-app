@@ -131,8 +131,10 @@ export default {
 
         playerTurn: function() {
             if(this.player.isBust()){
-                alert('You busted!');
-                this.state = 0;
+                this.sleep(3000).then(() => {
+                    alert('You busted!');
+                    this.state = 0;
+                });
             }
             else if(this.player.is21()){
                 this.nextState();
@@ -163,7 +165,7 @@ export default {
             this.finishRound();
         },
         finishRound: function() {
-            this.sleep(1500).then(() => {
+            this.sleep(3000).then(() => {
                 if(this.dealer.isBust()){
                     this.playerWins();
                 }
