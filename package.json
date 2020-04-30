@@ -13,7 +13,7 @@
         "vue-native-core": "0.0.8",
         "vue-native-helper": "0.0.9",
         "vue-native-router": "0.0.1-alpha.3",
-        "yarn": "^1.13.0"
+        "yarn": "^1.22.0"
     },
     "devDependencies": {
         "babel-preset-expo": "^4.0.0",
